@@ -5,18 +5,19 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Mens m1 = new Mens();
-        Tegenstander t1 = new Tegenstander();
-        System.out.println(t1.aanval());
-        System.out.println(t1.aanval());
-        System.out.println(t1.aanval());
 
-        while(t1.LevenT > 0 & m1.LevenM>0){
+        gevecht g = new gevecht();
+        g.initMensen();
+        g.initTegenstanders();
+
+
+
+        /*while(t1.LevenT > 0 & m1.LevenM>0){
             m1.setLeven(t1.aanval());
             t1.setLeven(m1.aanval());
             System.out.println("Leven mens: "+m1.LevenM);
             System.out.println("Leven tegenstander: " +t1.LevenT);
-        }
+        }*/
 
     }
 }
@@ -28,7 +29,7 @@ public class Main {
         int LevenM;
         Random random = new Random();
         Mens(){
-            LevenM= random.nextInt(maxLeven);
+            LevenM= random.nextInt(maxLeven)+1;
             System.out.println(LevenM);
         }
 
@@ -40,6 +41,9 @@ public class Main {
             LevenM=LevenM-att;
         }
 
+        Mens genereerMens(){
+            return new Mens();
+        }
 
     }
 
@@ -50,8 +54,7 @@ public class Main {
         int Aanval;
         Random random = new Random();
        Tegenstander(){
-           LevenT=random.nextInt(maxLeven);
-           System.out.println(LevenT);
+           LevenT=random.nextInt(maxLeven)+1;
        }
        int aanval(){
            return random.nextInt(maxAanval);
@@ -60,8 +63,50 @@ public class Main {
        void setLeven(int att){
            LevenT=LevenT-att;
        }
+       Tegenstander genereerTegenstander(){
+           return new Tegenstander();
+       }
 
     }
+
+    class gevecht{
+    int iMensen;
+    int iTegenstanders;
+
+        Mens m = new Mens();
+        Tegenstander t = new Tegenstander();
+
+        void initMensen(){
+            System.out.println("Aantal mensen: ");
+            Scanner scanner = new Scanner(System.in);
+            iMensen = scanner.nextInt();
+            System.out.println(iMensen);
+            ArrayList<Mens> deMensen = new ArrayList();
+
+            for(int i=0;i<iMensen;i++){
+                deMensen.add(m.genereerMens());
+            }
+
+            System.out.println(deMensen.size());
+        }
+
+        void initTegenstanders(){
+            System.out.println("Aantal tegenstanders: ");
+            Scanner scanner = new Scanner(System.in);
+            iTegenstanders = scanner.nextInt();
+            System.out.println(iTegenstanders);
+            ArrayList<Tegenstander> deTegenstanders = new ArrayList();
+
+            for(int i=0;i<iTegenstanders;i++){
+                deTegenstanders.add(t.genereerTegenstander());
+                System.out.println(deTegenstanders.get(i).LevenT);
+            }
+
+        }
+
+
+    }
+
 
 
 
